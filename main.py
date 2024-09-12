@@ -1,85 +1,87 @@
 import random
 import time
-carte = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-carte_usate = []
-banco = []
 
+carte = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-
-# Scelgo la prima carta del giocatore
+# Scelgo le carte iniziali del giocatore e del banco
 carta1g = random.choice(carte)
 carte.remove(carta1g)
 
-# Scelgo la carta del banco
 carta1b = random.choice(carte)
-carte.remove(carta1b)  # Rimuovi la carta dalla lista delle carte disponibili
+carte.remove(carta1b)
 
-#scelgo la seconda carta del giocatore
 carta2g = random.choice(carte)
 carte.remove(carta2g)
 
-print("La tua prima carta è: ", carta1g)
+print("La tua prima carta è:", carta1g)
 time.sleep(2)
-print("La prima carta del banco è: ", carta1b)
+print("La prima carta del banco è:", carta1b)
 time.sleep(2)
-print("La tua seconda carta è: ", carta2g)
+print("La tua seconda carta è:", carta2g)
 time.sleep(2)
 
-
-
-# Controllo sul risultato, se è meno di 21 chiedere cosa si vuole fare 
+# Calcolo il risultato del giocatore
 risultatog = carta1g + carta2g
-print("Il tuo risultato è: ", risultatog)
+print("Il tuo risultato è:", risultatog)
+
 if risultatog > 21:
     print("Hai sballato, il banco vince")
 else:
-    while True:  # Loop per continuare a chiedere finché il giocatore non decide di stare o sballa
+    while True:
         gioco = input("Cosa vuoi fare? Vuoi un'altra carta (Y) o stai? (N) ").lower()
         if gioco == "y":
-            nuova_carta = random.choice(carte)  # Pesca una nuova carta
+            nuova_carta = random.choice(carte)
             carte.remove(nuova_carta)
             risultatog += nuova_carta
-            print("Hai pescato: ", nuova_carta)
-            print("Il tuo nuovo risultato è: ", risultatog)
-            
-            if risultatog > 21:
+            print("Hai pescato:", nuova_carta)
+            time.sleep(2)
+            print("Il tuo nuovo risultato è:", risultatog)
+            time.sleep(2)
+            if risultatog == 21:
+                print("BLACKJACK! Hai vinto!")
+                break
+            elif risultatog > 21:
                 print("Hai sballato, il banco vince")
                 break
         elif gioco == "n":
             print("Hai deciso di stare, ora il banco rivela la sua seconda carta. RICORDA: il banco sta a 17")
             carta2b = random.choice(carte)
             carte.remove(carta2b)
-            print("La seconda carta del banco è: ", carta2b)
+            print("La seconda carta del banco è:", carta2b)
             risultatob = carta1b + carta2b
-            print("Il banco ha fatto ",risultatob,".")
+            print("Il banco ha un risultato di", risultatob)
             time.sleep(2)
-            if risultatob > risultatog:
+            if risultatob > risultatog and risultatob <= 21:
                 print("Il banco vince.")
                 break
-            elif (risultatob == risultatog):
+            elif risultatob == risultatog:
                 print("Parità.")
                 break
-            while risultatob <= 17:
+            while risultatob < 17:
                 print("Il banco pesca un'altra carta.")
                 time.sleep(2)
-                carte_agg = []
-                carte_agg = random.choice(carte)
-                carte.remove(carte_agg)
-                risultatob = risultatob+carte_agg
-                print("Il banco ha pescato ", carte_agg, "il banco ora è a ", risultatob )
+                nuova_carta_banco = random.choice(carte)
+                carte.remove(nuova_carta_banco)
+                risultatob += nuova_carta_banco
+                print("Il banco ha pescato", nuova_carta_banco, "e ora ha un totale di", risultatob)
                 time.sleep(2)
-            if risultatob <= 21 or (risultatob == 17 and risultatob>risultatog): 
-             print("Il banco ha fatto ", risultatob, "il banco vince. Hai perso.")
-             break
-            else: print("Il banco ha fatto ", risultatob, ", il banco ha sballato. Hai vinto.")
-            time.sleep(2)
-            False
+                if risultatob > 21:
+                    print("Il banco ha sballato. Hai vinto!")
+                    break
+                elif risultatob > risultatog and risultatob <= 21:
+                    print("Il banco vince.")
+                    break
+                elif risultatob == risultatog:
+                    print("Parità.")
+                    break
+            if risultatob >= 17:
+                print("Il banco ha fatto", risultatob, ".")
+                if risultatob > 21:
+                    print("Il banco ha sballato. Hai vinto!")
+                elif risultatob == risultatog:
+                    print("Parità.")
+                else:
+                    print("Il banco vince.")
+            break
         else:
             print("Inserisci una scelta valida (Y o N)")
-
-#controllo la somma delle carte del giocatore
-#controllo possibili combinazioni (asso + figura = bj , 2+ figura = 2 o 12 ecc)
-#restituisco il messaggio contenente il risultato e chiedo al giocatore se vuole un'altra carta o se sta
-#in base alla scelta del giocatore controllo il risultato e 1) do carta e restituisco il risultato 2) controllo il banco e agisco di conseguenza
-
-
