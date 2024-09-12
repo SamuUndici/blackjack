@@ -68,12 +68,12 @@ else:
                 risultatob = risultatob+carte_agg
                 print("Il banco ha pescato ", carte_agg, "il banco ora è a ", risultatob )
                 time.sleep(2)
-                if risultatob <= 21: 
-                 print("Il banco ha fatto ", risultatob, "il banco vince. Hai perso.")
-                
-                else: print("Il banco ha fatto ", risultatob, ", il banco ha sballato. Hai vinto.")
-                time.sleep(2)
-                False
+            if risultatob <= 21 or (risultatob == 17 and risultatob>risultatog): 
+             print("Il banco ha fatto ", risultatob, "il banco vince. Hai perso.")
+             break
+            else: print("Il banco ha fatto ", risultatob, ", il banco ha sballato. Hai vinto.")
+            time.sleep(2)
+            False
         else:
             print("Inserisci una scelta valida (Y o N)")
 
