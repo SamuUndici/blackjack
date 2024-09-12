@@ -18,12 +18,12 @@ carte.remove(carta1b)  # Rimuovi la carta dalla lista delle carte disponibili
 carta2g = random.choice(carte)
 carte.remove(carta2g)
 
-print("Hai questa carta: ", carta1g)
-time.sleep(1.5)
-print("Il banco ha questa carta: ", carta1b)
-time.sleep(1.5)
+print("La tua prima carta è: ", carta1g)
+time.sleep(2)
+print("La prima carta del banco è: ", carta1b)
+time.sleep(2)
 print("La tua seconda carta è: ", carta2g)
-time.sleep(1.5)
+time.sleep(2)
 
 
 
@@ -46,8 +46,34 @@ else:
                 print("Hai sballato, il banco vince")
                 break
         elif gioco == "n":
-            
-            break
+            print("Hai deciso di stare, ora il banco rivela la sua seconda carta. RICORDA: il banco sta a 17")
+            carta2b = random.choice(carte)
+            carte.remove(carta2b)
+            print("La seconda carta del banco è: ", carta2b)
+            risultatob = carta1b + carta2b
+            print("Il banco ha fatto ",risultatob,".")
+            time.sleep(2)
+            if risultatob > risultatog:
+                print("Il banco vince.")
+                break
+            elif (risultatob == risultatog):
+                print("Parità.")
+                break
+            while risultatob <= 17:
+                print("Il banco pesca un'altra carta.")
+                time.sleep(2)
+                carte_agg = []
+                carte_agg = random.choice(carte)
+                carte.remove(carte_agg)
+                risultatob = risultatob+carte_agg
+                print("Il banco ha pescato ", carte_agg, "il banco ora è a ", risultatob )
+                time.sleep(2)
+                if risultatob <= 21: 
+                 print("Il banco ha fatto ", risultatob, "il banco vince. Hai perso.")
+                
+                else: print("Il banco ha fatto ", risultatob, ", il banco ha sballato. Hai vinto.")
+                time.sleep(2)
+                False
         else:
             print("Inserisci una scelta valida (Y o N)")
 
